@@ -15,8 +15,13 @@ export default function Home() {
   };
 
   return (
-    <main className="flex-1">
-      <div></div>
+    <main className="flex-1 p-lg">
+      <div className="text-center text-3xl flex flex-col gap-lg h-[300px] justify-center">
+        <span>오디오 파일을 업로드하여</span>
+        <span>
+          <span className="text-primary">오실로스코프 파형</span>을 만들어 드립니다.
+        </span>
+      </div>
       <AudioUpload onLoad={onLoadFile} onError={console.log} />
       {!!audioBuffer && <AudioVisualizer audioBuffer={audioBuffer} />}
     </main>
