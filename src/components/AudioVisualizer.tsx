@@ -32,13 +32,29 @@ export default function AudioVisualizer({ audioBuffer }: TProps) {
     canvasContext.fillRect(0, 0, width, height);
 
     canvasContext.lineWidth = 1;
-    canvasContext.strokeStyle = 'red';
-    canvasContext.beginPath();
 
     const step = Math.ceil(dataArray.length / width);
     const amp = height / 2;
 
+    const colors = [
+      '#fff0f6',
+      '#ffdeeb',
+      '#fcc2d7',
+      '#faa2c1',
+      '#f783ac',
+      '#f06595',
+      '#e64980',
+      '#d6336c',
+      '#c2255c',
+      '#a61e4d',
+    ];
+    const colorWidth = Math.ceil(width / colors.length);
+
     for (let i = 0; i < width; i++) {
+      const colorIdx = Math.floor(i / colorWidth);
+      canvasContext.strokeStyle = colors[colorIdx];
+      canvasContext.beginPath();
+
       let min = 1;
       let max = -1;
       for (let j = 0; j < step; j++) {
@@ -46,12 +62,14 @@ export default function AudioVisualizer({ audioBuffer }: TProps) {
         if (datum < min) min = datum;
         if (datum > max) max = datum;
       }
+
       canvasContext.lineTo(i, (1 + min) * amp);
       canvasContext.lineTo(i, (1 + max) * amp);
       canvasContext.moveTo(i + 1, amp);
+
+      canvasContext.stroke();
     }
-    canvasContext.stroke();
   };
 
-  return <canvas ref={canvasRef} width={(window.innerWidth * 2) / 3} height={400} />;
+  return <canvas ref={canvasRef} width={(window.innerWidth * 2) / 3} height={300} />;
 }
