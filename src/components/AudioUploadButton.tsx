@@ -1,7 +1,7 @@
 'use client';
 
-import { ChangeEvent, useRef } from 'react';
-import Button from '@/components/Button';
+import { ChangeEvent, useRef, useState } from 'react';
+import { Button } from '@/components';
 
 interface TProps {
   onLoad: (reader: FileReader) => void;
@@ -9,6 +9,7 @@ interface TProps {
 }
 
 export default function AudioUploadButton({ onLoad, onError }: TProps) {
+  const [filename, setFilename] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -16,6 +17,8 @@ export default function AudioUploadButton({ onLoad, onError }: TProps) {
     if (!files?.length) return;
 
     const file = files[0];
+    setFilename(file.name);
+
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
 
@@ -28,15 +31,10 @@ export default function AudioUploadButton({ onLoad, onError }: TProps) {
   };
 
   return (
-    <div className="relative">
-      <input
-        className="-z-10 absolute top-[5px] left-[29px]"
-        ref={inputRef}
-        type="file"
-        accept="audio/*"
-        onChange={onChange}
-      />
+    <div className="flex flex-col gap-sm items-center">
+      <input className="hidden" ref={inputRef} type="file" accept="audio/*" onChange={onChange} />
       <Button onClick={() => inputRef.current?.click()}>파일 업로드</Button>
+      {!!filename && <span className="text-sm">{filename}</span>}
     </div>
   );
 }
