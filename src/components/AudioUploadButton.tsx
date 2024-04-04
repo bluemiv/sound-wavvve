@@ -8,7 +8,7 @@ interface TProps {
   onError: (error: ProgressEvent<FileReader>) => void;
 }
 
-export default function AudioUpload({ onLoad, onError }: TProps) {
+export default function AudioUploadButton({ onLoad, onError }: TProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {

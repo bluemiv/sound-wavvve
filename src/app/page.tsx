@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AudioUpload, AudioVisualizer } from '@/components';
+import { AudioUploadButton, AudioVisualizer } from '@/components';
 import { getAudioBuffer } from '@/utils';
 
 export default function Home() {
@@ -22,8 +22,10 @@ export default function Home() {
           <span className="text-primary">오실로스코프 파형</span>을 만들어 드립니다.
         </span>
       </div>
-      <AudioUpload onLoad={onLoadFile} onError={console.log} />
-      {!!audioBuffer && <AudioVisualizer audioBuffer={audioBuffer} />}
+      <div className="flex flex-col justify-center items-center gap-lg">
+        <AudioUploadButton onLoad={onLoadFile} onError={console.log} />
+        {!!audioBuffer && <AudioVisualizer audioBuffer={audioBuffer} />}
+      </div>
     </main>
   );
 }
