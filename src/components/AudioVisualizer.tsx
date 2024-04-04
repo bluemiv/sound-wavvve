@@ -28,7 +28,7 @@ export default function AudioVisualizer({ audioBuffer }: TProps) {
 
     const dataArray = audioBuffer.getChannelData(0);
 
-    canvasContext.fillStyle = '#ffffff';
+    canvasContext.fillStyle = 'rgba(0,0,0,0)';
     canvasContext.fillRect(0, 0, width, height);
 
     canvasContext.lineWidth = 1;

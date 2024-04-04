@@ -22,7 +22,7 @@ export default function Home() {
           <span className="text-primary">오실로스코프 파형</span>을 만들어 드립니다.
         </span>
       </div>
-      <div className="flex flex-col justify-center items-center gap-lg">
+      <div className="flex flex-col justify-center items-center gap-xl">
         <AudioUploadButton onLoad={onLoadFile} onError={console.log} />
         {!!audioBuffer && <AudioVisualizer audioBuffer={audioBuffer} />}
       </div>
