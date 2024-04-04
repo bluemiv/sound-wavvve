@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 
 interface TProps {
-  arrayBuffer?: ArrayBuffer | null;
+  arrayBuffer: ArrayBuffer;
 }
 
 export default function AudioVisualizer({ arrayBuffer }: TProps) {
@@ -15,13 +15,10 @@ export default function AudioVisualizer({ arrayBuffer }: TProps) {
   }, [arrayBuffer]);
 
   const initialize = async () => {
-    if (!arrayBuffer || !canvasRef.current) return;
+    if (!canvasRef.current) return;
 
-    if (!audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
-    }
+    audioContextRef.current = new AudioContext();
     const audioContext = audioContextRef.current;
-
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
     draw({ audioBuffer });
@@ -37,34 +34,34 @@ export default function AudioVisualizer({ arrayBuffer }: TProps) {
     const width = canvas.width;
     const height = canvas.height;
 
-    canvasContext.fillStyle = 'rgb(255, 255, 255)';
-    canvasContext.fillRect(0, 0, width, height);
-    canvasContext.lineWidth = 2;
-    canvasContext.strokeStyle = 'rgb(0, 0, 0)';
-    canvasContext.beginPath();
+    canvasContext.clearRect(0, 0, width, height);
 
-    const bufferLength = audioBuffer.length;
     const dataArray = audioBuffer.getChannelData(0);
 
-    const sliceWidth = width / bufferLength;
-    let x = 0;
+    canvasContext.fillStyle = '#ffffff';
+    canvasContext.fillRect(0, 0, width, height);
 
-    for (let i = 0; i < bufferLength; i++) {
-      const v = dataArray[i] * 0.5 + 0.5;
-      const y = v * height;
+    canvasContext.lineWidth = 1;
+    canvasContext.strokeStyle = 'red';
+    canvasContext.beginPath();
 
-      if (i === 0) {
-        canvasContext.moveTo(x, y);
-      } else {
-        canvasContext.lineTo(x, y);
+    const step = Math.ceil(dataArray.length / width);
+    const amp = height / 2;
+
+    for (let i = 0; i < width; i++) {
+      let min = 1;
+      let max = -1;
+      for (let j = 0; j < step; j++) {
+        const datum = dataArray[i * step + j];
+        if (datum < min) min = datum;
+        if (datum > max) max = datum;
       }
-
-      x += sliceWidth;
+      canvasContext.lineTo(i, (1 + min) * amp);
+      canvasContext.lineTo(i, (1 + max) * amp);
+      canvasContext.moveTo(i + 1, amp);
     }
-
-    canvasContext.lineTo(canvas.width, canvas.height / 2);
     canvasContext.stroke();
   };
 
-  return <canvas ref={canvasRef} width={600} height={300} />;
+  return <canvas ref={canvasRef} width={(window.innerWidth * 2) / 3} height={400} />;
 }

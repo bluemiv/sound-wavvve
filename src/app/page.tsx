@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main className="flex-1">
-      <AudioVisualizer arrayBuffer={arrayBuffer} />
+      {!!arrayBuffer && <AudioVisualizer arrayBuffer={arrayBuffer} />}
       <AudioUpload onLoad={onLoadFile} onError={console.log} />
     </main>
   );
