@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEvent, useRef } from 'react';
+import Button from '@/components/Button';
 
 interface TProps {
   onLoad: (reader: FileReader) => void;
@@ -27,9 +28,15 @@ export default function AudioUpload({ onLoad, onError }: TProps) {
   };
 
   return (
-    <div>
-      <input ref={inputRef} type="file" accept="audio/*" onChange={onChange} className="hidden" />
-      <button onClick={() => inputRef.current?.click()}>업로드</button>
+    <div className="relative">
+      <input
+        className="-z-10 absolute top-[5px] left-[29px]"
+        ref={inputRef}
+        type="file"
+        accept="audio/*"
+        onChange={onChange}
+      />
+      <Button onClick={() => inputRef.current?.click()}>파일 업로드</Button>
     </div>
   );
 }
