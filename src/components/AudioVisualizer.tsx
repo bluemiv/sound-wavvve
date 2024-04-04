@@ -3,26 +3,16 @@
 import { useEffect, useRef } from 'react';
 
 interface TProps {
-  arrayBuffer: ArrayBuffer;
+  audioBuffer: AudioBuffer;
 }
 
-export default function AudioVisualizer({ arrayBuffer }: TProps) {
+export default function AudioVisualizer({ audioBuffer }: TProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
 
   useEffect(() => {
-    initialize();
-  }, [arrayBuffer]);
-
-  const initialize = async () => {
-    if (!canvasRef.current) return;
-
-    audioContextRef.current = new AudioContext();
-    const audioContext = audioContextRef.current;
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-
+    if (!canvasRef.current || !audioBuffer) return;
     draw({ audioBuffer });
-  };
+  }, [audioBuffer]);
 
   const draw = ({ audioBuffer }: { audioBuffer: AudioBuffer }) => {
     const canvas = canvasRef.current;
