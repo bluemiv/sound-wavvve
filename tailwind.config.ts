@@ -34,6 +34,21 @@ const config: Config = {
       gap: {
         ...space,
       },
+      animation: {
+        'fade-in-wave': 'fadeInMoveTop 0.75s ease-in-out',
+      },
+      keyframes: {
+        fadeInMoveTop: {
+          from: {
+            opacity: '0',
+            transform: 'translateY(18px)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+      },
     },
   },
   plugins: [],

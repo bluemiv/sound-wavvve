@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { TPropsWithClassName } from '@/types';
 
 interface TProps {
   audioBuffer: AudioBuffer;
 }
 
-export default function AudioVisualizer({ audioBuffer }: TProps) {
+export default function AudioVisualizer({ audioBuffer, className }: TPropsWithClassName<TProps>) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -71,5 +72,12 @@ export default function AudioVisualizer({ audioBuffer }: TProps) {
     }
   };
 
-  return <canvas ref={canvasRef} width={(window.innerWidth * 2) / 3} height={300} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className={className}
+      width={(window.innerWidth * 2) / 3}
+      height={300}
+    />
+  );
 }
