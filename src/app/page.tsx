@@ -23,8 +23,10 @@ export default function Home() {
         </span>
       </div>
       <div className="flex flex-col justify-center items-center gap-xl">
-        <AudioUploadButton onLoad={onLoadFile} onError={console.log} />
-        {!!audioBuffer && <AudioVisualizer audioBuffer={audioBuffer} />}
+        <AudioUploadButton onLoad={onLoadFile} onError={console.error} />
+        {!!audioBuffer && (
+          <AudioVisualizer className="animate-fade-in-wave" audioBuffer={audioBuffer} />
+        )}
       </div>
     </main>
   );
