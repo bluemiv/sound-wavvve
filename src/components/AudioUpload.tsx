@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 
 interface TProps {
-  onLoad: () => void;
+  onLoad: (reader: FileReader) => void;
   onError: (error: ProgressEvent<FileReader>) => void;
 }
 
@@ -10,9 +10,12 @@ export default function AudioUpload({ onLoad, onError }: TProps) {
     const files = event.target.files;
     if (!files?.length) return;
 
+    const file = files[0];
     const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+
     if (!!onLoad) {
-      reader.onload = onLoad;
+      reader.onload = () => onLoad(reader);
     }
     if (!!onError) {
       reader.onerror = onError;
