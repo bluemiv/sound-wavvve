@@ -1,9 +1,9 @@
 import type { Config } from 'tailwindcss';
 
 const primaryColor = {
-  'primary-hover': '#1890ff',
-  primary: '#096dd9',
-  'primary-active': '#0050b3',
+  'primary-hover': '#f06595',
+  primary: '#e64980',
+  'primary-active': '#d6336c',
 };
 
 export const space = {
@@ -24,6 +24,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: { ...primaryColor },
+      height: { header: '70px' },
       padding: {
         ...space,
       },
