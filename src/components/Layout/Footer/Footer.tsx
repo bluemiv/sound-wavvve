@@ -16,11 +16,6 @@ export default function Footer() {
               icon: <Icons.Github />,
             },
             {
-              label: 'Portfolio',
-              href: process.env.NEXT_PUBLIC_PORTFOLIO_LINK,
-              icon: <Icons.Star />,
-            },
-            {
               label: 'Blog',
               href: process.env.NEXT_PUBLIC_BLOG_LINK,
               icon: <Icons.Tistory />,
